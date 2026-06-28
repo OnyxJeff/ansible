@@ -13,31 +13,31 @@
   roles:
     - pihole
 
-- name: UniFi Node
+- name: UniFi Controller Node
   hosts: unifi
   become: yes
   roles:
     - unifi
 
-- name: Transmission Node
+- name: Transmission Torrent Node
   hosts: torrent
   become: yes
   roles:
     - transmission
 
-- name: Control Node
+- name: Ansible Control Node
   hosts: control
   become: yes
   roles:
     - ansible_control
 
-- name: DashPi Nodes
+- name: DashPi Node
   hosts: dashpi
   become: yes
   roles:
     - kiosk
 
-- name: DashPi NOC Node
+- name: DashPi-NOC Node
   hosts: dashpi_noc
   become: yes
   roles:

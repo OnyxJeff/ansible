@@ -1,3 +1,3 @@
 node_user: "{{ inventory_hostname }}"
 node_home: "/home/{{ inventory_hostname }}"
-repo_name: "{{ inventory_hostname }}-odin"
+repo_name: "{{ inventory_hostname }}"
