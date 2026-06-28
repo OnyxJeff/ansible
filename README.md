@@ -16,7 +16,7 @@ ssh-keygen -t ed25519 -C "ansible-automation"
     - `-C "ansible-automation"` → optional comment so you know which key it is
     - You'll see promtps like:
     `Enter file in which to save the key (/home/<USER>/.ssh/ansible-automation):`
-  - Press **Enter** to accept the default location.
+  - Input `/home/<USER>/.ssh/ansible-automation` and press **Enter** to accept the location.
   - When prompted for a passphrase, you can either:
     - Enter one (more secure, but you’ll type it for every run unless you use `ssh-agent`)
     - Leave empty (convenient for automated playbooks)
@@ -32,12 +32,12 @@ ls -l ~/.ssh/ansible-automation*
 
 - Copy created public key to `/ansible/identity/automation/` folder
 ```bash
-cp ~/.ssh/ansible-automation.pub ~/pp4-valkyrie/ansible/identity/automation/
+cp ~/.ssh/ansible-automation.pub ~/potentpi4/ansible/identity/automation/ansible.pub
 ```
 
 - Copy user key on host machine to `/ansible/identity/user/` folder
 ```bash
-grep 'OnyxJeff' ~/.ssh/authorized_keys > ~/pp4-valkyrie/ansible/identity/user/onyxjeff.pub
+grep 'OnyxJeff' ~/.ssh/authorized_keys > ~/potentpi4/ansible/identity/user/onyxjeff.pub
 ```
 
 - Install SSHPass on Control Node:
