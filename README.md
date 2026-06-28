@@ -35,6 +35,11 @@ ls -l ~/.ssh/ansible-automation*
 cp ~/.ssh/ansible-automation.pub ~/pp4-valkyrie/ansible/identity/automation/
 ```
 
+- Copy user key on host machine to `/ansible/identity/user/` folder
+```bash
+grep 'OnyxJeff' ~/.ssh/authorized_keys > ~/pp4-valkyrie/ansible/identity/user/onyxjeff.pub
+```
+
 - Install SSHPass on Control Node:
 ```bash
 sudo apt install -y sshpass
