@@ -1,0 +1,2 @@
+- name: Install Pi-hole
+  command: "{{ node_home }}/{{ repo_name }}/scripts/pihole.sh"

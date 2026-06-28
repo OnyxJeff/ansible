@@ -1,0 +1,17 @@
+- name: Enable I2C
+  lineinfile:
+    path: /boot/config.txt
+    line: "dtparam=i2c_arm=on"
+
+- name: Install display dependencies
+  apt:
+    name:
+      - python3
+      - python3-pip
+      - i2c-tools
+    state: present
+
+- name: Run display setup script
+  command: "{{ node_home }}/{{ repo_name }}/U6143_ssd1306/setup_display_service.sh"
+  become: yes
+  become_user: root

@@ -1,0 +1,35 @@
+all:
+  children:
+
+    dns:
+      hosts:
+        potentpi1:
+
+    unifi:
+      hosts:
+        potentpi2:
+
+    torrent:
+      hosts:
+        potentpi3:
+
+    control:
+      hosts:
+        potentpi4:
+
+    dashpi:
+      hosts:
+        potentpi6:
+
+    dashpi_noc:
+      hosts:
+        potentpi7:
+
+    potentpi:
+      children:
+        dns:
+        unifi:
+        torrent:
+        control:
+        dashpi:
+        dashpi_noc:

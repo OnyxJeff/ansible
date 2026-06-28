@@ -1,0 +1,4 @@
+- name: Start Transmission stack
+  command: docker compose up -d
+  args:
+    chdir: "{{ node_home }}/{{ repo_name }}/transmission"

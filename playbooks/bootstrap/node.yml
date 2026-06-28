@@ -1,26 +1,83 @@
-- name: Load user keys from identity folder
-  slurp:
-    src: "{{ item }}"
-  loop: "{{ lookup('fileglob', 'identity/users/*.pub', wantlist=True) }}"
-  register: user_keys
+- name: Bootstrap new node (SSH + identity injection)
+  hosts: new_nodes
+  become: yes
+  gather_facts: true
 
-- name: Load automation keys
-  slurp:
-    src: "{{ item }}"
-  loop: "{{ lookup('fileglob', 'identity/automation/*.pub', wantlist=True) }}"
-  register: automation_keys
+  vars:
+    identity_path: "{{ playbook_dir }}/../../identity"
 
-- name: Build final authorized key list
-  set_fact:
-    bootstrap_keys: >-
-      {{
-        (user_keys.results | map(attribute='content') | map('b64decode') | list) +
-        (automation_keys.results | map(attribute='content') | map('b64decode') | list)
-      }}
+  tasks:
 
-- name: Install authorized keys
-  authorized_key:
-    user: "{{ ansible_user }}"
-    key: "{{ item }}"
-    state: present
-  loop: "{{ bootstrap_keys }}"
+    # ----------------------------
+    # Safety check
+    # ----------------------------
+    - name: Verify identity directory exists on controller
+      delegate_to: localhost
+      run_once: true
+      stat:
+        path: "{{ identity_path }}"
+      register: identity_dir
+
+    - name: Fail if identity directory is missing
+      delegate_to: localhost
+      run_once: true
+      fail:
+        msg: "Identity directory missing at {{ identity_path }}"
+      when: not identity_dir.stat.exists
+
+
+    # ----------------------------
+    # Load identity keys (CONTROLLER ONLY)
+    # ----------------------------
+
+    - name: Load user keys
+      delegate_to: localhost
+      run_once: true
+      set_fact:
+        user_keys: "{{ lookup('fileglob', identity_path + '/users/*.pub', wantlist=True) }}"
+
+    - name: Load automation keys
+      delegate_to: localhost
+      run_once: true
+      set_fact:
+        automation_keys: "{{ lookup('fileglob', identity_path + '/automation/*.pub', wantlist=True) }}"
+
+    # ----------------------------
+    # Combine keys (CONTROLLER ONLY)
+    # ----------------------------
+
+    - name: Build bootstrap key list
+      delegate_to: localhost
+      run_once: true
+      set_fact:
+        bootstrap_keys: "{{ user_keys + automation_keys }}"
+
+
+    # ----------------------------
+    # Install keys on node
+    # ----------------------------
+
+    - name: Install authorized SSH keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ lookup('file', item) }}"
+        state: present
+      loop: "{{ bootstrap_keys }}"
+
+
+    # ----------------------------
+    # Optional hardening step
+    # ----------------------------
+    - name: Disable password authentication (optional hardening)
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+      notify: restart ssh
+
+
+  handlers:
+    - name: restart ssh
+      service:
+        name: ssh
+        state: restarted

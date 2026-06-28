@@ -1,0 +1,6 @@
+- name: Start container stack
+  command: docker compose up -d
+  args:
+    chdir: "{{ node_home }}/{{ repo_name }}"
+  become: yes
+  become_user: "{{ node_user }}"
