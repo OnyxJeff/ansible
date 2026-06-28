@@ -1,0 +1,8 @@
+nodes:
+  pi_nodes:
+    users: [jeff]
+    automation: [ansible]
+
+  vms:
+    users: [jeff]
+    automation: [ansible]
