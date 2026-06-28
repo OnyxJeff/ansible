@@ -1,11 +1,26 @@
-- name: Bootstrap new node
-  hosts: new_nodes
-  become: yes
+- name: Load user keys from identity folder
+  slurp:
+    src: "{{ item }}"
+  loop: "{{ lookup('fileglob', 'identity/users/*.pub', wantlist=True) }}"
+  register: user_keys
 
-  tasks:
-    - name: Install workstation + automation keys
-      authorized_key:
-        user: "{{ ansible_user }}"
-        key: "{{ item }}"
-        state: present
-      loop: "{{ bootstrap_keys }}"
+- name: Load automation keys
+  slurp:
+    src: "{{ item }}"
+  loop: "{{ lookup('fileglob', 'identity/automation/*.pub', wantlist=True) }}"
+  register: automation_keys
+
+- name: Build final authorized key list
+  set_fact:
+    bootstrap_keys: >-
+      {{
+        (user_keys.results | map(attribute='content') | map('b64decode') | list) +
+        (automation_keys.results | map(attribute='content') | map('b64decode') | list)
+      }}
+
+- name: Install authorized keys
+  authorized_key:
+    user: "{{ ansible_user }}"
+    key: "{{ item }}"
+    state: present
+  loop: "{{ bootstrap_keys }}"
