@@ -1,0 +1,11 @@
+- name: Bootstrap new node
+  hosts: new_nodes
+  become: yes
+
+  tasks:
+    - name: Install workstation + automation keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ item }}"
+        state: present
+      loop: "{{ bootstrap_keys }}"
