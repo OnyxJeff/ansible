@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: true
+
+  become: "{{ ansible_become | default(true) }}"
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Upgrade packages (Debian/Ubuntu style)
+      ansible.builtin.apt:
+        upgrade: yes
+        autoremove: yes
+        autoclean: yes
+      when: ansible_facts['os_family'] == "Debian"

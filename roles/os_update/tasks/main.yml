@@ -1,4 +1,0 @@
-- name: Upgrade system
-  apt:
-    upgrade: dist
-    update_cache: yes

@@ -1,0 +1,7 @@
+---
+- name: Raspberry Pi base configuration
+  hosts: raspberries
+  become: true
+
+  roles:
+    - pi_base

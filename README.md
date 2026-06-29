@@ -1,12 +1,14 @@
-## 🧪 Installing Ansible
+# 🧪 Installing Ansible
 
-- Install Ansible
+## Install Ansible
 ```bash
 sudo apt install -y ansible git python3-pip
 ansible --version
 ```
 
-- Generate an SSH Key Pair
+---
+
+## Generate an SSH Key Pair
 
 ```bash
 ssh-keygen -t ed25519 -C "ansible-automation"
@@ -21,7 +23,7 @@ ssh-keygen -t ed25519 -C "ansible-automation"
     - Enter one (more secure, but you’ll type it for every run unless you use `ssh-agent`)
     - Leave empty (convenient for automated playbooks)
 
-- Verify your keys
+### Verify your keys
 ```bash
 ls -l ~/.ssh/ansible-automation*
 ```
@@ -30,22 +32,24 @@ ls -l ~/.ssh/ansible-automation*
     - `ansible-automation` → private key (keep secret!)
     - `ansible-automation.pub` → public key (what you copy to targets)
 
-- Copy created public key to `/ansible/identity/automation/` folder
+### Copy created public key to `/ansible/identity/automation/` folder
 ```bash
 cp ~/.ssh/ansible-automation.pub ~/potentpi4/ansible/identity/automation/ansible.pub
 ```
 
-- Copy user key on host machine to `/ansible/identity/user/` folder
+### Copy user key on host machine to `/ansible/identity/user/` folder
 ```bash
-grep 'OnyxJeff' ~/.ssh/authorized_keys > ~/potentpi4/ansible/identity/user/onyxjeff.pub
+grep 'OnyxJeff' ~/.ssh/authorized_keys > ~/potentpi4/ansible/identity/users/onyxjeff.pub
 ```
 
-- Install SSHPass on Control Node:
+---
+
+## Install SSHPass on Control Node:
 ```bash
 sudo apt install -y sshpass
 ```
 
-- Copy the public key to a target host
+### Copy the public key to a target host
   Example for a Pi or Linux VM:
   ```bash
   ssh-copy-id pi@<target-host-ip>
@@ -57,7 +61,7 @@ sudo apt install -y sshpass
   ssh-copy-id -p 2222 pi@<target-host-ip>
   ```
 
-- Test passwordless SSH
+### Test passwordless SSH
 ```bash
 ssh pi@<target-host-ip>
 ```
@@ -70,3 +74,23 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/ansible-automation
 ```
 This lets Ansible use the key automatically
+
+---
+
+## Commands using scripts
+
+First we must make all scripts executable:
+```bash
+chmod +x ~/potentpi4/ansible/scripts/*.sh
+```
+
+### Commands
+- Adds a node to hosts.ini for inspection later; adds users and automation SSH keys and disables password authentication on device
+```bash 
+bash ~/potentpi4/ansible/scripts/add-node.sh <IP Address> <ssh-username> <server-name>
+```
+
+- `Update` and `upgrade` selected node(s)
+```bash
+bash ~/potentpi4/ansible/scripts/update-all.sh <group>
+```

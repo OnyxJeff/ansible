@@ -1,0 +1,22 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name:
+      - git
+      - curl
+      - htop
+      - ca-certificates
+      - vim
+      - nano
+    state: present
+
+- name: Ensure base tools directory exists
+  ansible.builtin.file:
+    path: /opt
+    state: directory
+    mode: '0755'

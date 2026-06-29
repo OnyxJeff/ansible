@@ -1,0 +1,22 @@
+---
+- name: Check if Docker exists
+  ansible.builtin.stat:
+    path: /usr/bin/docker
+  register: docker_bin
+
+- name: Install Docker via get.docker.com script
+  ansible.builtin.shell: |
+    curl -fsSL https://get.docker.com | sh
+  when: not docker_bin.stat.exists
+
+- name: Install Docker Compose plugin
+  ansible.builtin.apt:
+    name: docker-compose-plugin
+    state: present
+    update_cache: yes
+
+- name: Enable Docker service
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started

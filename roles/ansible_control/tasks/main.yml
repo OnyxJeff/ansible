@@ -1,6 +1,0 @@
-- name: Install Ansible dependencies
-  apt:
-    name:
-      - ansible
-      - python3-pip
-    state: present

@@ -1,13 +1,30 @@
-- name: Install Docker + Compose
-  apt:
-    name:
-      - docker.io
-      - docker-compose-plugin
-    state: present
-    update_cache: yes
+---
+- name: Gather OS facts
+  ansible.builtin.setup:
 
-- name: Add user to docker group
-  user:
-    name: "{{ node_user }}"
+# ----------------------------
+# 1. STATE CHECK
+# ----------------------------
+- name: Check if Docker is installed
+  ansible.builtin.stat:
+    path: /usr/bin/docker
+  register: docker_bin
+
+# ----------------------------
+# 2. INSTALL PHASE (OS-aware)
+# ----------------------------
+- name: Install Docker on Debian family
+  ansible.builtin.include_tasks: install_debian.yml
+  when:
+    - ansible_os_family == "Debian"
+    - not docker_bin.stat.exists
+
+# ----------------------------
+# 3. POST-CONFIG (always runs if docker exists OR just installed)
+# ----------------------------
+- name: Add users to docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
     groups: docker
     append: yes
+  loop: "{{ docker_users }}"
