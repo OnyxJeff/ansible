@@ -1,0 +1,6 @@
+---
+- import_tasks: prereqs.yml
+- import_tasks: install.yml
+- import_tasks: restore.yml
+- import_tasks: validate.yml
+- import_tasks: exporter.yml

@@ -1,0 +1,32 @@
+- name: Stop Pi-hole
+  systemd:
+    name: pihole-FTL
+    state: stopped
+
+- name: Restore config files
+  copy:
+    src: "pihole/{{ inventory_hostname }}/etc/pihole/pihole.toml"
+    dest: /etc/pihole/pihole.toml
+
+- name: Restore hosts file
+  copy:
+    src: "pihole/{{ inventory_hostname }}/etc/hosts"
+    dest: /etc/pihole/hosts
+
+- name: Restore gravity DB
+  copy:
+    src: "pihole/{{ inventory_hostname }}/etc/pihole/gravity.db"
+    dest: /etc/pihole/gravity.db
+
+- name: Remove runtime DB (force rebuild)
+  file:
+    path: /etc/pihole/pihole-FTL.db
+    state: absent
+
+- name: Start Pi-hole
+  systemd:
+    name: pihole-FTL
+    state: started
+
+- name: Rebuild gravity
+  command: pihole -g

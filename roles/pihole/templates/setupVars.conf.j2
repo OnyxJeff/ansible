@@ -1,0 +1,23 @@
+PIHOLE_INTERFACE={{ pihole_interface }}
+
+IPV4_ADDRESS={{ pihole_ipv4 }}
+
+{% if pihole_ipv6 %}
+IPV6_ADDRESS={{ pihole_ipv6 }}
+{% endif %}
+
+PIHOLE_DNS_1={{ pihole_dns_1 }}
+PIHOLE_DNS_2={{ pihole_dns_2 }}
+
+QUERY_LOGGING={{ pihole_query_logging | ternary('true','false') }}
+
+INSTALL_WEB_SERVER={{ pihole_install_webserver | ternary('true','false') }}
+INSTALL_WEB_INTERFACE={{ pihole_install_webinterface | ternary('true','false') }}
+
+WEBPASSWORD={{ pihole_web_password }}
+
+DNSMASQ_LISTENING={{ pihole_listening_behavior }}
+
+TEMPERATUREUNIT={{ pihole_temperature_unit }}
+
+PRIVACYLEVEL={{ pihole_privacy_level }}

@@ -1,0 +1,40 @@
+---
+- name: Ensure apt cache is up to date
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install prerequisite packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - curl
+      - git
+      - dnsutils
+      - iproute2
+      - ca-certificates
+      - sudo
+      - unzip
+    state: present
+
+- name: Ensure /etc/pihole exists
+  become: true
+  ansible.builtin.file:
+    path: /etc/pihole
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Gather default interface
+  ansible.builtin.setup:
+    gather_subset:
+      - network
+
+- name: Verify supported operating system
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family == "Debian"
+    fail_msg: >
+      This role currently supports Debian-based operating systems only.

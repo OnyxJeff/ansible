@@ -1,0 +1,31 @@
+---
+- name: Install required packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - curl
+      - git
+      - dnsutils
+    state: present
+    update_cache: true
+
+- name: Create Pi-hole configuration directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/pihole
+    state: directory
+    mode: "0755"
+
+- name: Deploy setupVars.conf
+  become: true
+  ansible.builtin.template:
+    src: setupVars.conf.j2
+    dest: /etc/pihole/setupVars.conf
+    mode: "0644"
+
+- name: Install Pi-hole
+  become: true
+  ansible.builtin.shell: |
+    curl -sSL https://install.pi-hole.net | bash /dev/stdin --unattended
+  args:
+    creates: /usr/local/bin/pihole

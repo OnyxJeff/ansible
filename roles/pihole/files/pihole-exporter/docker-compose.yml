@@ -1,0 +1,21 @@
+services:
+
+  pihole_sqlite_exporter:
+    image: merlijntishauser/pihole-sqlite-exporter:latest
+    container_name: pihole_sqlite_exporter
+    restart: unless-stopped
+    # Set PUID/PGID in your shell env if you need specific permissions
+    user: "${PUID:-0}:${PGID:-0}"
+    environment:
+      HOSTNAME_LABEL: "host.docker.internal"
+      EXPORTER_TZ: "America/New_York"
+      FTL_DB_PATH: "/etc/pihole/pihole-FTL.db"
+      GRAVITY_DB_PATH: "/etc/pihole/gravity.db"
+      LISTEN_ADDR: "0.0.0.0"
+      LISTEN_PORT: "9617"
+      TOP_N: "10"
+      # DEBUG: "true"   # or --verbose
+    volumes:
+      - /pihole/etc:/etc/pihole:ro
+    ports:
+      - "9617:9617"

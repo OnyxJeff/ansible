@@ -1,0 +1,10 @@
+---
+- name: Verify Pi-hole binary exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/pihole
+  register: pihole_binary
+
+- name: Fail if Pi-hole installation failed
+  ansible.builtin.fail:
+    msg: Pi-hole was not installed successfully.
+  when: not pihole_binary.stat.exists

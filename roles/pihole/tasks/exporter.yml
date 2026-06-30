@@ -1,0 +1,20 @@
+###########################################################
+# Deploy pihole-exporter stack files
+###########################################################
+
+- name: Copy pihole-exporter stack to host
+  ansible.builtin.synchronize:
+    src: pihole-exporter/
+    dest: "{{ pihole_exporter_dir }}/"
+    recursive: true
+
+###########################################################
+# Bring up Docker Compose stack
+###########################################################
+
+- name: Start pihole-exporter stack
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ pihole_exporter_dir }}"
+  register: pihole_exporter_up
+  changed_when: "'Creating' in pihole_exporter_up.stdout or 'Started' in pihole_exporter_up.stdout or pihole_exporter_up.rc == 0"
