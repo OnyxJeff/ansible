@@ -1,0 +1,14 @@
+[Unit]
+Description=UCTRONICS OLED Display
+After=multi-user.target
+
+[Service]
+Type=simple
+User={{ oled_user }}
+WorkingDirectory={{ oled_install_dir }}/C
+ExecStart={{ oled_install_dir }}/C/display
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

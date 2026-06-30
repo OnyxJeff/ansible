@@ -1,0 +1,14 @@
+---
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart OLED service
+  ansible.builtin.systemd:
+    name: "{{ oled_service_name }}"
+    enabled: true
+    state: restarted
+
+- name: Reboot Raspberry Pi
+  ansible.builtin.reboot:
+    msg: "Reboot required to enable I2C"

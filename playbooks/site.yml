@@ -1,44 +1,16 @@
 - name: Base system for all PotentPis
-  hosts: potentpi
-  become: yes
-  roles:
-    - base
-    - docker
-    - os_update
-    - containers
+  hosts: raspberries
+  become: true
 
-- name: DNS Node (Pi-hole)
-  hosts: dns
-  become: yes
   roles:
-    - pihole
-
-- name: UniFi Controller Node
-  hosts: unifi
-  become: yes
-  roles:
-    - unifi
-
-- name: Transmission Torrent Node
-  hosts: torrent
-  become: yes
-  roles:
-    - transmission
-
-- name: Ansible Control Node
-  hosts: control
-  become: yes
-  roles:
-    - ansible_control
-
-- name: DashPi Node
-  hosts: dashpi
-  become: yes
-  roles:
-    - kiosk
-
-- name: DashPi-NOC Node
-  hosts: dashpi_noc
-  become: yes
-  roles:
-    - kiosk
+    - pi_base
+    - role: potentpi
+      when: enable_potentpi | default(false)
+    - role: docker
+      when: enable_docker | default(false)
+    - role: dockprom
+      when: enable_dockprom | default(false)
+    - role: display_oled
+      when: enable_display_oled | default(false)
+    - role: display_kiosk
+      when: enable_display_kiosk | default(false)

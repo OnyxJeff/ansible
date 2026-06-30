@@ -1,0 +1,11 @@
+---
+oled_install_dir: "/home/{{ ansible_user }}/U6143_ssd1306"
+
+oled_service_name: uctronics-display
+
+oled_user: root
+
+oled_temperature_type: CELSIUS
+oled_ipaddress_type: ETH0_ADDRESS
+oled_ip_switch: IP_DISPLAY_CLOSE
+oled_custom_display: "OnyxNet HQ"
