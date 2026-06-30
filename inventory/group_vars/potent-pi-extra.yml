@@ -1,5 +1,2 @@
-enable_potentpi: false
-enable_docker: false
-enable_dockprom: false
-enable_display_oled: false
-enable_display_kiosk: false
+enable_docker: true
+enable_dockprom: true

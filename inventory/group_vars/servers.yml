@@ -1,6 +1,8 @@
 enable_pi_base: false
-enable_potentpi: false
 enable_docker: false
 enable_dockprom: false
 enable_display_oled: false
 enable_display_kiosk: false
+enable_unifi: false
+enable_dns: false
+enable_transmission: false

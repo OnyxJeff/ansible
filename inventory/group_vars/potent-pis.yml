@@ -1,3 +1,2 @@
-enable_potentpi: true
 enable_docker: true
 enable_dockprom: true
