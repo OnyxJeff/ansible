@@ -2,12 +2,12 @@ PIHOLE_INTERFACE={{ pihole_interface }}
 
 IPV4_ADDRESS={{ pihole_ipv4 }}
 
-{% if pihole_ipv6 %}
+{% if pihole_ipv6 is defined and pihole_ipv6 not in [false, None, "", "none"] %}
 IPV6_ADDRESS={{ pihole_ipv6 }}
 {% endif %}
 
-PIHOLE_DNS_1={{ pihole_dns_1 }}
-PIHOLE_DNS_2={{ pihole_dns_2 }}
+PIHOLE_DNS_1={{ pihole_dns_1 | default('1.1.1.1') }}
+PIHOLE_DNS_2={{ pihole_dns_2 | default('1.0.0.1') }}
 
 QUERY_LOGGING={{ pihole_query_logging | ternary('true','false') }}
 

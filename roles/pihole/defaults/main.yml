@@ -1,3 +1,17 @@
 pihole_exporter_dir: "/home/{{ ansible_user }}/pihole-exporter"
 pihole_interface: "{{ ansible_default_ipv4.interface }}"
 pihole_ipv4: "{{ ansible_host }}"
+pihole_ipv6: false
+
+pihole_dns_1: "1.1.1.1"
+pihole_dns_2: "1.0.0.1"
+
+pihole_query_logging: true
+pihole_install_webserver: true
+pihole_install_webinterface: true
+
+pihole_listening_behavior: "single"
+pihole_temperature_unit: "C"
+pihole_privacy_level: 0
+
+pihole_web_password: "uranium32"
