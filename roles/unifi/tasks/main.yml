@@ -1,0 +1,31 @@
+---
+###########################################################
+# Docker stack: dockprom
+###########################################################
+
+- name: Ensure Docker Compose plugin is installed
+  ansible.builtin.apt:
+    name: docker-compose-plugin
+    state: present
+    update_cache: true
+
+###########################################################
+# Deploy dockprom stack files
+###########################################################
+
+- name: Copy unifi stack to host
+  ansible.builtin.synchronize:
+    src: unifi/
+    dest: "{{ unifi_dir }}/"
+    recursive: true
+
+###########################################################
+# Bring up Docker Compose stack
+###########################################################
+
+- name: Start unifi stack
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ unifi_dir }}"
+  register: unifi_up
+  changed_when: "'Creating' in unifi_up.stdout or 'Started' in unifi_up.stdout or unifi_up.rc == 0"

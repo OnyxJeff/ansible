@@ -8,4 +8,4 @@ oled_user: root
 oled_temperature_type: CELSIUS
 oled_ipaddress_type: ETH0_ADDRESS
 oled_ip_switch: IP_DISPLAY_CLOSE
-oled_custom_display: "OnyxNet HQ"
+oled_custom_display: "OnyxNet HQ - {{ ansible_user }}"

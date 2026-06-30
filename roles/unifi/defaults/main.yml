@@ -1,0 +1,1 @@
+unifi_dir: "/home/{{ ansible_user }}/unifi"
