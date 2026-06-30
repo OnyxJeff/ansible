@@ -20,8 +20,8 @@
     - role: unifi
       when: enable_unifi | default(false)
 
-    - role: dns
-      when: enable_dns | default(false)
+    - role: pihole
+      when: enable_pihole | default(false)
 
     - role: transmission
       when: enable_transmission | default(false)

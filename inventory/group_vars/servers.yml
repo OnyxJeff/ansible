@@ -4,5 +4,5 @@ enable_dockprom: false
 enable_display_oled: false
 enable_display_kiosk: false
 enable_unifi: false
-enable_dns: false
+enable_pihole: false
 enable_transmission: false
