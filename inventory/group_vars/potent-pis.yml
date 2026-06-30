@@ -1,7 +1,3 @@
-roles:
-  - role: potentpi
-    enable_potentpi: true
-  - role: docker
-    enable_docker: true
-  - role: dockprom
-    enable_dockprom: true
+enable_potentpi: true
+enable_docker: true
+enable_dockprom: true

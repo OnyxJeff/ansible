@@ -1,3 +1,1 @@
-roles:
-  - role: display_oled
-    enable_display_oled: true
+enable_display_oled: true
