@@ -29,4 +29,5 @@
     state: started
 
 - name: Rebuild gravity
+  become: true
   command: pihole -g
