@@ -1,1 +1,2 @@
 pihole_exporter_dir: "/home/{{ ansible_user }}/pihole-exporter"
+pihole_interface: "{{ ansible_facts['default_ipv4']['interface'] }}"
