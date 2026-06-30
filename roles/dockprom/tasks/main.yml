@@ -1,0 +1,31 @@
+---
+###########################################################
+# Docker stack: dockprom
+###########################################################
+
+- name: Ensure Docker Compose plugin is installed
+  ansible.builtin.apt:
+    name: docker-compose-plugin
+    state: present
+    update_cache: true
+
+###########################################################
+# Deploy dockprom stack files
+###########################################################
+
+- name: Copy dockprom stack to host
+  ansible.builtin.synchronize:
+    src: dockprom/
+    dest: "{{ dockprom_dir }}/"
+    recursive: true
+
+###########################################################
+# Bring up Docker Compose stack
+###########################################################
+
+- name: Start dockprom stack
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ dockprom_dir }}"
+  register: dockprom_up
+  changed_when: "'Creating' in dockprom_up.stdout or 'Started' in dockprom_up.stdout or dockprom_up.rc == 0"

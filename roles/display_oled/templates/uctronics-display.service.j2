@@ -1,14 +1,18 @@
 [Unit]
-Description=UCTRONICS OLED Display
+Description=UCTRONICS C Display Service ()
+# Start after basic system initialization and multi-user environment is up
 After=multi-user.target
 
 [Service]
-Type=simple
-User={{ oled_user }}
+# Consider changing User= to potentpi2 if root privileges are not strictly required
+# and the user potentpi2 has the necessary hardware permissions (e.g., added to i2c/gpio groups)
+User=root
+# Group= Baset on User
 WorkingDirectory={{ oled_install_dir }}/C
+# Execute the compiled program. Do NOT use '&'. systemd handles backgrounding.
 ExecStart={{ oled_install_dir }}/C/display
-Restart=on-failure
-RestartSec=5
+Restart=on-failure # Restart the service if the program crashes
+RestartSec=5s      # Wait 5 seconds before restarting
 
 [Install]
 WantedBy=multi-user.target

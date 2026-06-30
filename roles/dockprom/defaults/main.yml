@@ -1,0 +1,1 @@
+dockprom_dir: "/home/{{ ansible_user }}/dockprom"

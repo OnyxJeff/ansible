@@ -26,8 +26,23 @@
   notify: Reboot Raspberry Pi
 
 ###########################################################
+# Kernel module (needed for /dev/i2c-1)
+###########################################################
+
+- name: Ensure i2c-dev module loads at boot
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/i2c.conf
+    content: |
+      i2c-dev
+
+###########################################################
 # Groups
 ###########################################################
+
+- name: Ensure i2c group exists
+  ansible.builtin.group:
+    name: i2c
+    state: present
 
 - name: Add user to i2c group
   ansible.builtin.user:
@@ -40,31 +55,33 @@
 ###########################################################
 
 - name: Copy UCTRONICS display project
-  ansible.builtin.copy:
+  ansible.builtin.synchronize:
     src: U6143_ssd1306/
     dest: "{{ oled_install_dir }}/"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
 
 ###########################################################
-# Configure header
+# Build (clean + make)
 ###########################################################
 
-- name: Configure OLED header
-  ansible.builtin.template:
-    src: ssd1306_i2c.h.j2
-    dest: "{{ oled_install_dir }}/C/ssd1306_i2c.h"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-
-###########################################################
-# Build
-###########################################################
+- name: Clean display build
+  ansible.builtin.command:
+    cmd: make clean
+    chdir: "{{ oled_install_dir }}/C"
 
 - name: Build display program
   ansible.builtin.command:
     cmd: make
     chdir: "{{ oled_install_dir }}/C"
+
+- name: Verify display binary exists
+  ansible.builtin.stat:
+    path: "{{ oled_install_dir }}/C/display"
+  register: display_bin
+
+- name: Fail if display binary missing
+  ansible.builtin.fail:
+    msg: "OLED display binary not found after build"
+  when: not display_bin.stat.exists
 
 ###########################################################
 # Service
@@ -80,7 +97,7 @@
     - Restart OLED service
 
 ###########################################################
-# Ensure service enabled
+# Enable service
 ###########################################################
 
 - name: Enable OLED service
@@ -88,3 +105,14 @@
     name: "{{ oled_service_name }}"
     enabled: true
     state: started
+
+###########################################################
+# Restart Raspberry Pi
+###########################################################
+
+- name: Force Raspberry Pi reboot after OLED setup
+  ansible.builtin.reboot:
+    msg: "Forcing reboot after OLED setup"
+    reboot_timeout: 900
+    pre_reboot_delay: 5
+    post_reboot_delay: 30
