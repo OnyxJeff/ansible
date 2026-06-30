@@ -4,13 +4,18 @@
 
   roles:
     - pi_base
+
     - role: potentpi
       when: enable_potentpi | default(false)
+
     - role: docker
       when: enable_docker | default(false)
+
     - role: dockprom
       when: enable_dockprom | default(false)
+
     - role: display_oled
       when: enable_display_oled | default(false)
+
     - role: display_kiosk
       when: enable_display_kiosk | default(false)

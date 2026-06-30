@@ -1,0 +1,3 @@
+roles:
+  - role: display_kiosk
+    enable_display_kiosk: true

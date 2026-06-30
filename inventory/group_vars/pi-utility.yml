@@ -1,0 +1,3 @@
+roles:
+  - role: docker
+    enable_docker: true
