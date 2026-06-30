@@ -5,17 +5,17 @@
 
 - name: Restore config files
   copy:
-    src: "pihole/{{ inventory_hostname }}/etc/pihole/pihole.toml"
+    src: "{{ pihole_backup_base }}/{{ inventory_hostname }}/etc/pihole/pihole.toml"
     dest: /etc/pihole/pihole.toml
 
 - name: Restore hosts file
   copy:
-    src: "pihole/{{ inventory_hostname }}/etc/hosts"
+    src: "{{ pihole_backup_base }}/{{ inventory_hostname }}/etc/hosts"
     dest: /etc/pihole/hosts
 
 - name: Restore gravity DB
   copy:
-    src: "pihole/{{ inventory_hostname }}/etc/pihole/gravity.db"
+    src: "{{ pihole_backup_base }}/{{ inventory_hostname }}/etc/pihole/gravity.db"
     dest: /etc/pihole/gravity.db
 
 - name: Remove runtime DB (force rebuild)

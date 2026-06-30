@@ -6,3 +6,4 @@ enable_display_kiosk: false
 enable_unifi: false
 enable_pihole: false
 enable_transmission: false
+pihole_backup_base: "{{ playbook_dir }}/../inventory/files/pihole"
