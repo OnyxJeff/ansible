@@ -5,9 +5,6 @@
   roles:
     - pi_base
 
-    - role: potentpi
-      when: enable_potentpi | default(false)
-
     - role: docker
       when: enable_docker | default(false)
 
@@ -19,3 +16,12 @@
 
     - role: display_kiosk
       when: enable_display_kiosk | default(false)
+
+    - role: unifi
+      when: enable_unifi | default(false)
+
+    - role: dns
+      when: enable_dns | default(false)
+
+    - role: transmission
+      when: enable_transmission | default(false)
