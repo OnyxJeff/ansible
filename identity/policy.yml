@@ -1,8 +1,4 @@
 nodes:
-  pi_nodes:
-    users: [onyxjeff]
-    automation: [ansible]
-
-  vms:
+  all:
     users: [onyxjeff]
     automation: [ansible]
