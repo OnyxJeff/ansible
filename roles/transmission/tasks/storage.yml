@@ -1,0 +1,46 @@
+---
+- name: Install NFS client package
+  apt:
+    name: nfs-common
+    state: present
+  become: true
+
+- name: Create NFS share directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+  loop:
+    - "/media/NASHDD1"
+
+- name: Create NFS share mount unit file
+  template:
+    src: media-NASHDD1_share.mount.j2
+    dest: /etc/systemd/system/media-NASHDD1.mount
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  become: true
+
+- name: Enable NFS share mount
+  systemd:
+    name: media-NASHDD1.mount
+    enabled: true
+  become: true
+
+- name: Start NFS share mount
+  systemd:
+    name: media-NASHDD1.mount
+    state: started
+  become: true
+
+- name: Verify NFS share mount
+  command: mountpoint -q /media/NASHDD1
+  register: mountpoint_check
+  failed_when: mountpoint_check.rc != 0
+  changed_when: false

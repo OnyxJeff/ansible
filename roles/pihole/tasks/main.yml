@@ -4,6 +4,7 @@
 - import_tasks: restore.yml
 - import_tasks: validate.yml
 - import_tasks: exporter.yml
+- import_tasks: nebula.yml
 
 - name: Rebuild gravity
   command: sudo pihole -g

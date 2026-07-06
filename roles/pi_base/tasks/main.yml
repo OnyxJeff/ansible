@@ -20,3 +20,19 @@
     path: /opt
     state: directory
     mode: '0755'
+
+- name: Ensure scripts, logs, and backup_logs directories exist
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - scripts
+    - logs
+    - backup_logs
+    
+- name: Copy apt-get-autoupdater.sh script to the scripts directory
+  ansible.builtin.template:
+    src: apt-get-autoupdater.sh.j2
+    dest: "/home/{{ ansible_user }}/scripts/apt-get-autoupdater.sh"
+    mode: '0755'

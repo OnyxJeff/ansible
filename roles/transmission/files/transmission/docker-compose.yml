@@ -1,0 +1,43 @@
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      USER: ${TRANSMISSION_USER}
+      PASS: ${TRANSMISSION_PASSWORD}
+    volumes:
+      - ./config:/config
+      - /media/NASHDD1/torrent-complete:/downloads
+      - /media/NASHDD1/torrent-inprogress:/incomplete
+      - ./watch:/watch
+    ports:
+      - "9001:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:9091/transmission/web/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - transmission
+
+  transmission-exporter:
+    image: metalmatze/transmission-exporter:latest
+    container_name: transmission-exporter
+    restart: unless-stopped
+    links: 
+      - transmission
+    ports:
+      - "19091:9091"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      TRANSMISSION_ADDR: http://transmission:9091
+    networks:
+      - transmission

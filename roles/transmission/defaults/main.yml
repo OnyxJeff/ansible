@@ -1,0 +1,6 @@
+transmission_dir: "/home/{{ ansible_user }}/transmission"
+
+transmission_uid: 1000
+transmission_gid: 1000
+
+transmission_timezone: America/New_York

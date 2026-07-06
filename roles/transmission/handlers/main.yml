@@ -1,0 +1,13 @@
+- name: Restart transmission
+  systemd:
+    name: transmission-daemon
+    state: restarted
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+
+- name: Restart mount
+  systemd:
+    name: media-nfs_share.mount
+    state: restarted

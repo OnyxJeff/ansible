@@ -1,0 +1,41 @@
+---
+###########################################################
+# Docker stack: nebula-sync
+###########################################################
+
+- name: Ensure Docker Compose plugin is installed
+  ansible.builtin.apt:
+    name: docker-compose-plugin
+    state: present
+    update_cache: true
+
+###########################################################
+# Deploy nebula-sync stack files
+###########################################################
+
+- name: Copy nebula-sync stack to host
+  ansible.builtin.synchronize:
+    src: nebula-sync/
+    dest: "{{ nebula_sync_dir }}/"
+    recursive: true
+
+###########################################################
+# Copy .env file
+###########################################################
+
+- name: Copy .env file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ nebula_sync_dir }}/.env"
+    mode: "0644"
+
+###########################################################
+# Bring up Docker Compose stack
+###########################################################
+
+- name: Start nebula-sync stack
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ nebula_sync_dir }}"
+  register: nebula-sync_up
+  changed_when: "'Creating' in nebula-sync_up.stdout or 'Started' in nebula-sync_up.stdout or nebula-sync_up.rc == 0"

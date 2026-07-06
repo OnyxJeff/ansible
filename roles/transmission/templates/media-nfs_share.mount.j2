@@ -1,0 +1,12 @@
+[Unit]
+Description=NFS Mount for Transmission
+After=network.target
+
+[Mount]
+What=10.100.0.15:/mnt/The_Big_One/Torrents
+Where=/media/NASHDD1
+Type=nfs
+Options=_netdev,auto,hard,intr,noatime
+
+[Install]
+WantedBy=multi-user.target

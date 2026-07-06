@@ -1,0 +1,36 @@
+- name: Deploy docker files
+  ansible.builtin.template:
+    src: transmission/
+    dest: "{{ transmission_dir }}/"
+    owner: "{{ ansible_user }}"
+    mode: "0755"
+
+- name: Deploy environment file
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ transmission_dir }}/.env"
+    owner: "{{ ansible_user }}"
+    mode: "0600"
+
+- name: Start transmission stack
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ transmission_dir }}"
+  register: transmission_up
+  changed_when: "'Creating' in transmission_up.stdout or 'Started' in transmission_up.stdout or transmission_up.rc == 0"
+
+- name: Wait for transmission to be up
+  ansible.builtin.wait_for:
+    host: "{{ inventory_hostname }}"
+    port: 9091
+    delay: 5
+    timeout: 30
+
+- name: Check if transmission is running
+  ansible.builtin.uri:
+    url: "http://{{ inventory_hostname }}:9091/transmission/web/"
+    status_code: 200
+  register: transmission_status
+  retries: 5
+  delay: 10
+  until: transmission_status.status == 200
