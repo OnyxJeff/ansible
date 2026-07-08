@@ -1,0 +1,7 @@
+*.tmp
+*.bak
+secrets/
+*.env
+*.ini
+*.secret
+*.pass

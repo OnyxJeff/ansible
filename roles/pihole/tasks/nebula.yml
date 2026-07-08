@@ -37,5 +37,5 @@
   ansible.builtin.command:
     cmd: docker compose up -d
     chdir: "{{ nebula_sync_dir }}"
-  register: nebula-sync_up
-  changed_when: "'Creating' in nebula-sync_up.stdout or 'Started' in nebula-sync_up.stdout or nebula-sync_up.rc == 0"
+  register: nebula_sync_up
+  changed_when: "'Creating' in nebula_sync_up.stdout or 'Started' in nebula_sync_up.stdout or nebula_sync_up.rc == 0"
