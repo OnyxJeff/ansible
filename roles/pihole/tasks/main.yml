@@ -5,6 +5,7 @@
 - import_tasks: validate.yml
 - import_tasks: exporter.yml
 - import_tasks: nebula.yml
+  when: inventory_hostname == "svr-odin"
 
 - name: Rebuild gravity
   command: sudo pihole -g
