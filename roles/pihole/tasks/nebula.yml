@@ -56,4 +56,4 @@
     - name: "Nebula Sync - daily Discord report"
       minute: "0"
       hour: "8"
-      job: "cd ~/nebula-sync && flock -n /tmp/nebula-sync.lock docker compose run --rm --env-file daily/.env nebula-sync"
+      job: "cd ~/nebula-sync/daily && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
