@@ -23,19 +23,37 @@
 # Copy .env file
 ###########################################################
 
-- name: Copy .env file
+- name: Copy nebula.env files
   ansible.builtin.template:
-    src: .env.j2
+    src: nebula.env.j2
     dest: "{{ nebula_sync_dir }}/.env"
     mode: "0644"
 
+- name: Copy daily.env files
+  ansible.builtin.template:
+    src: nebula_daily.env.j2
+    dest: "{{ nebula_sync_dir }}/daily/.env"
+    mode: "0644"
+
 ###########################################################
-# Bring up Docker Compose stack
+# Create Cron job for sync(s)
 ###########################################################
 
-- name: Start nebula-sync stack
-  ansible.builtin.command:
-    cmd: docker compose up -d
-    chdir: "{{ nebula_sync_dir }}"
-  register: nebula_sync_up
-  changed_when: "'Creating' in nebula_sync_up.stdout or 'Started' in nebula_sync_up.stdout or nebula_sync_up.rc == 0"
+- name: Configure Nebula Sync cron jobs
+  become: true
+  ansible.builtin.cron:
+    name: "{{ item.name }}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    job: "{{ item.job }}"
+    user: root
+  loop:
+    - name: "Nebula Sync - every 15 minutes"
+      minute: "*/15"
+      hour: "*"
+      job: "cd ~/nebula-sync && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
+
+    - name: "Nebula Sync - daily Discord report"
+      minute: "0"
+      hour: "8"
+      job: "cd ~/nebula-sync && flock -n /tmp/nebula-sync.lock docker compose run --rm --env-file daily/.env nebula-sync"
