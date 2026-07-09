@@ -15,3 +15,10 @@
     groups: docker
     append: true
   loop: "{{ docker_users }}"
+
+- name: Force Raspberry Pi reboot after docker setup
+  ansible.builtin.reboot:
+    msg: "Forcing reboot after docker user setup"
+    reboot_timeout: 900
+    pre_reboot_delay: 5
+    post_reboot_delay: 30

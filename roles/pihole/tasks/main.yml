@@ -4,6 +4,7 @@
 - import_tasks: restore.yml
 - import_tasks: validate.yml
 - import_tasks: exporter.yml
+  when: inventory_hostname == "svr-odin"
 - import_tasks: nebula.yml
   when: inventory_hostname == "svr-odin"
 
