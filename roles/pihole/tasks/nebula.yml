@@ -51,9 +51,9 @@
     - name: "Nebula Sync - every 15 minutes"
       minute: "*/15"
       hour: "*"
-      job: "cd ~/nebula-sync && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
+      job: "cd /home/{{ ansible_user }}/nebula-sync && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
 
     - name: "Nebula Sync - daily Discord report"
       minute: "0"
       hour: "8"
-      job: "cd ~/nebula-sync/daily && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
+      job: "cd /home/{{ ansible_user }}/nebula-sync/daily && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
