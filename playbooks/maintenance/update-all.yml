@@ -7,7 +7,9 @@
   tasks:
     - name: Update apt cache
       ansible.builtin.apt:
-        update_cache: yes
+        update_cache: true
+        update_cache_retries: 10
+        update_cache_retry_max_delay: 30
       when: ansible_facts['os_family'] == "Debian"
 
     - name: Upgrade packages (Debian/Ubuntu style)

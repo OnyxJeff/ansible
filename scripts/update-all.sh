@@ -17,7 +17,7 @@ fi
 # ----------------------------
 BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 export ANSIBLE_CONFIG="$BASE_DIR/ansible.cfg"
-INVENTORY="$BASE_DIR/inventory/hosts.ini"
+INVENTORY="$BASE_DIR/inventory/hosts.yml"
 PLAYBOOK="$BASE_DIR/playbooks/maintenance/update-all.yml"
 
 # ----------------------------
