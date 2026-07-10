@@ -45,15 +45,21 @@
     name: "{{ item.name }}"
     minute: "{{ item.minute }}"
     hour: "{{ item.hour }}"
+    user: "{{ nebula_sync_user }}"
     job: "{{ item.job }}"
-    user: root
   loop:
     - name: "Nebula Sync - every 15 minutes"
       minute: "*/15"
       hour: "*"
-      job: "cd /home/{{ ansible_user }}/nebula-sync && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
+      job: >
+        cd {{ nebula_sync_path }} &&
+        flock -n /tmp/nebula-sync.lock
+        docker compose run --rm nebula-sync
 
     - name: "Nebula Sync - daily Discord report"
       minute: "0"
       hour: "8"
-      job: "cd /home/{{ ansible_user }}/nebula-sync/daily && flock -n /tmp/nebula-sync.lock docker compose run --rm nebula-sync"
+      job: >
+        cd {{ nebula_sync_path }}/daily &&
+        flock -n /tmp/nebula-sync.lock
+        docker compose run --rm nebula-sync

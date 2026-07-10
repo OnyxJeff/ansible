@@ -1,4 +1,8 @@
 timezone: America/New_York
+
+nebula_sync_user: potentpi1
+nebula_sync_path: "/home/{{ nebula_sync_user }}/nebula-sync"
+
 pihole_exporter_dir: "/home/{{ ansible_user }}/pihole-exporter"
 pihole_interface: "{{ ansible_default_ipv4.interface }}"
 pihole_ipv4: "{{ ansible_host }}"
