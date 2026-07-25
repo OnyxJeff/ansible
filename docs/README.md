@@ -14,85 +14,43 @@ This documentation exists alongside the infrastructure code and should be treate
 
 ---
 
+## Getting Started
+
+## Getting Started
+
+If you are new to OnyxNet, read the documentation in the following order:
+
+1. Core/CORE-00-Standards.md
+2. Core/CORE-01-Architecture.md
+3. Core/CORE-02-Networking.md
+4. Core/CORE-03-Security.md
+5. Core/CORE-04-Monitoring.md
+
+Once familiar with the infrastructure, continue with the relevant Service and Operations documentation.
+
+---
+
 ## Core Principles
 
-OnyxNet follows these principles:
-
-### Infrastructure as Code
-
-Infrastructure should be defined through automation whenever practical.
-
-Manual configuration is acceptable during troubleshooting or initial discovery, but permanent changes should be migrated into Ansible roles, templates, or variables.
-
-### Git as the Source of Truth
-
-The desired state of the infrastructure exists within version-controlled repositories.
-
-Changes should follow this process:
-
-1. Modify configuration or automation.
-2. Review changes.
-3. Commit changes.
-4. Deploy through Ansible.
-5. Validate the result.
-6. Update documentation if behavior changes.
-
-### Idempotent Deployments
-
-Ansible playbooks should safely run multiple times and converge on the desired state.
-
-A successful maintenance run should result in minimal or no changes unless an intentional modification has been made.
-
-### Standardization
-
-Common patterns should be used throughout the environment:
-
-- Consistent host naming
-- Consistent inventory organization
-- Standard Docker directory layouts
-- Reusable Ansible roles
-- Predictable service deployment methods
-
-### Observability
-
-Production services should provide visibility into their health and performance.
-
-Where practical:
-
-- Prometheus collects metrics
-- Node Exporter provides host metrics
-- Service-specific exporters expose application metrics
-- Grafana provides visualization
-
-### Recoverability
-
-The environment should be rebuildable after hardware failure or catastrophic loss.
-
-Documentation should include:
-
-- Deployment procedures
-- Dependencies
-- Validation steps
-- Recovery procedures
-- Known limitations
+Infrastructure standards and operatoinal conventions are defined in `docs/Core/CORE-00-Standards.md`.
 
 ---
 
 ## Documentation Structure
 
-The documentation is organized by function rather than by deployment order.
+The documentation is organized by responsibility rather than deployment order.
 
 ```text
 docs/
 │
 ├── README.md
-├── 00-Standards.md
 │
 ├── Core/
-│   ├── Base-Infrastructure.md
-│   ├── Inventory.md
-│   ├── Docker.md
-│   └── Monitoring.md
+│   ├── CORE-00-Standards.md
+│   ├── CORE-01-Architecture.md
+│   ├── CORE-02-Networking.md
+│   ├── CORE-03-Security.md
+│   └── CORE-04-Monitoring.md
 │
 ├── Services/
 │   ├── High-Availability-DNS.md
@@ -102,14 +60,18 @@ docs/
 │   └── ...
 │
 ├── Operations/
-│   ├── Add-New-Host.md
-│   ├── Update-Cluster.md
-│   ├── Replace-Raspberry-Pi.md
-│   └── Disaster-Recovery.md
+│   ├── OPS-Add-New-Host.md
+│   ├── OPS-Update-Cluster.md
+│   ├── OPS-Replace-Raspberry-Pi.md
+│   └── OPS-Disaster-Recovery.md
 │
-└── images/
-    ├── network-topology.drawio
-    ├── network-topology.png
+└── assets/
+    ├── images/
+    │   └── logo.png
+    ├── topology-maps/
+    │   ├── network-topology.drawio
+    │   ├── network-topology.png
+    │   └── ...
     └── ...
 ```
 
@@ -122,49 +84,13 @@ docs/
 | `Core/`       | Foundational infrastructure components used throughout OnyxNet |
 | `Services/`   | Individual applications and service-specific documentation     |
 | `Operations/` | Maintenance procedures, runbooks, and recovery documentation   |
-| `images/`	    | Architecture diagrams and supporting visual documentation      |
+| `assests/`    | Architecture diagrams and supporting visual documentation      |
 
 ---
 
 ## Documentation Standards
 
-Every infrastructure document should include the following sections when applicable:
-
-### Purpose
-
-What the component does and why it exists.
-
-### Architecture
-
-How the component fits into the larger OnyxNet environment.
-
-### Requirements
-
-Hardware, software, dependencies, and assumptions.
-
-### Deployment
-
-How the component is deployed through automation.
-
-### Validation
-
-How to verify the deployment succeeded.
-
-### Monitoring
-
-How health and performance are observed.
-
-### Troubleshooting
-
-Common failures and resolution steps.
-
-### Recovery
-
-How to rebuild or restore the component.
-
-### Future Improvements
-
-Potential enhancements that are intentionally not part of the current implementation.
+Infrastructure documentation standards are defined in `docs/Core/CORE-00-Standards.md`.
 
 ---
 
