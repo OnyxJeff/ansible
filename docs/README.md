@@ -1,4 +1,7 @@
 # OnyxNet Infrastructure Documentation
+
+>Documentation should explain decisions, not just configurations. Configuration files can be regenerated from Ansible or Docker Compose. The reasoning behind design choices cannot. Each document should capture the intent behind the implementation so the infrastructure can be maintained and evolved consistently.
+
 ## Overview
 
 This documentation repository serves as the operational manual for the OnyxNet infrastructure.
@@ -23,9 +26,7 @@ Infrastructure should be defined through automation whenever practical.
 
 Manual configuration is acceptable during troubleshooting or initial discovery, but permanent changes should be migrated into Ansible roles, templates, or variables.
 
----
-
-## Git as the Source of Truth
+### Git as the Source of Truth
 
 The desired state of the infrastructure exists within version-controlled repositories.
 
@@ -38,17 +39,13 @@ Changes should follow this process:
 5. Validate the result.
 6. Update documentation if behavior changes.
 
----
-
-## Idempotent Deployments
+### Idempotent Deployments
 
 Ansible playbooks should safely run multiple times and converge on the desired state.
 
 A successful maintenance run should result in minimal or no changes unless an intentional modification has been made.
 
----
-
-## Standardization
+### Standardization
 
 Common patterns should be used throughout the environment:
 
@@ -58,9 +55,7 @@ Common patterns should be used throughout the environment:
 - Reusable Ansible roles
 - Predictable service deployment methods
 
----
-
-## Observability
+### Observability
 
 Production services should provide visibility into their health and performance.
 
@@ -71,9 +66,7 @@ Where practical:
 - Service-specific exporters expose application metrics
 - Grafana provides visualization
 
----
-
-## Recoverability
+### Recoverability
 
 The environment should be rebuildable after hardware failure or catastrophic loss.
 

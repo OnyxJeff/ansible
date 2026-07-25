@@ -10,7 +10,7 @@
 | Created | 2026-07-25 |
 | Last Updated | 2026-07-25 |
 
-> This document defines the operational standards for OnyxNet infrastructure and serves as the baseline reference for all infrastructure documentation.
+This document defines the operational standards used throughout the OnyxNet infrastructure. All infrastructure, automation, and service documentation should follow these standards unless a documented exception has been approved.
 
 ---
 
@@ -514,13 +514,6 @@ Approved methods:
 - Environment files excluded from Git
 - External secret management systems
 
-Examples:
-
-```ini
-pihole_web_password: !vault |
-  $ANSIBLE_VAULT;1.1;AES256
-```
-
 Secrets include:
 
 - Passwords
@@ -659,17 +652,9 @@ The Ansible Docker role is responsible for:
 
 Docker capability is enabled through inventory variables.
 
-Example:
-
-`enable_docker: true`
-
 ### Docker Directory Standards
 
 All Docker workloads use a standardized directory structure.
-
-Primary Docker directory:
-
-`/opt/docker`
 
 Each application or stack receives its own directory.
 
@@ -731,14 +716,6 @@ Container names should be explicit and descriptive.
 Recommended format:
 
 `<service-name>`
-
-Examples:
-```text
-prometheus
-nodeexporter
-pihole_sqlite_exporter
-nebula-sync
-```
 
 Container names should avoid:
 
@@ -839,13 +816,6 @@ Use:
 - `.env` files
 - Ansible Vault
 - Secret management systems
-
-Examples:
-
-```text
-.env
-docker-compose.yml
-```
 
 Sensitive information includes:
 
@@ -1022,32 +992,13 @@ Standard image:
 
 Prometheus configuration should be managed through Ansible.
 
-Example location:
-
-`/opt/docker/dockprom/prometheus/prometheus.yml`
-
 #### Prometheus Labels
 
 Each Prometheus instance must identify itself.
 
 The external label should use the inventory hostname.
 
-Example:
-
-```text
-external_labels:
-  monitor: '{{ inventory_hostname }}'
-```
-
 This ensures metrics can be traced back to their originating system.
-
-Example values:
-
-```text
-monitor="svr-odin"
-monitor="svc-pihole"
-monitor="hml-pihole"
-```
 
 ### Node Exporter Standards
 
@@ -1122,27 +1073,6 @@ Monitoring the individual Pi-hole hosts rather than the VIP prevents loss of vis
 
 Prometheus scrape configurations should be generated through templates where possible.
 
-Example:
-
-```text
-scrape_configs:
-
-  - job_name: nodeexporter
-    static_configs:
-      - targets:
-          - localhost:9100
-
-  - job_name: prometheus
-    static_configs:
-      - targets:
-          - localhost:9090
-
-  - job_name: pihole
-    static_configs:
-      - targets:
-          - localhost:9617
-```
-
 Local exporters should be scraped locally.
 
 ### Grafana Standards
@@ -1157,15 +1087,6 @@ Grafana responsibilities:
 - User access
 
 Grafana data sources should point to individual Prometheus instances.
-
-Example:
-
-```text
-Prometheus - svr-odin
-Prometheus - svr-forseti
-Prometheus - svc-pihole
-Prometheus - hml-pihole
-```
 
 ### Monitoring Data Retention
 
@@ -1262,13 +1183,6 @@ Secrets should not be stored directly in:
 
 Ansible Vault is the primary secret management method for infrastructure automation.
 
-Example:
-
-```text
-pihole_web_password: !vault |
-  $ANSIBLE_VAULT;1.1;AES256
-```
-
 Encrypted values may exist within:
 
 - group_vars
@@ -1281,28 +1195,9 @@ Plaintext secrets should never be committed.
 
 Files containing secrets must be excluded from version control.
 
-Examples:
-
-```text
-vault.secret
-.env
-*.pem
-*.key
-```
-
 Repository exclusions should include:
 
 `.gitignore`
-
-Example:
-
-```text
-vault*
-*.secret
-*.pem
-*.key
-.env
-```
 
 ### Docker Secret Standards
 
@@ -1331,10 +1226,6 @@ or generated through Ansible templates.
 ### Environment File Standards
 
 Environment files may be used for application configuration.
-
-Example:
-
-`/opt/docker/service/.env`
 
 Environment files should:
 
@@ -1384,14 +1275,6 @@ Private keys should:
 - Never be shared through unsecured channels
 
 Public keys may be managed through Ansible.
-
-Example:
-
-```text
-identity/
-├── automation/
-└── users/
-```
 
 ### Backup Requirements
 
@@ -1597,14 +1480,6 @@ Infrastructure changes should validate:
 - Resource availability
 - Cluster health
 
-Examples:
-
-- Proxmox node status
-- Network reachability
-- Storage availability
-- Hardware health checks
-
-
 ### Ansible Validation
 
 Ansible deployments should verify:
@@ -1616,12 +1491,6 @@ Ansible deployments should verify:
 
 Where practical, roles should include automated validation tasks.
 
-Examples:
-
-- Confirming a service binary exists.
-- Verifying configuration files are deployed.
-- Checking service status.
-
 ### Docker Validation
 
 Docker deployments should verify:
@@ -1630,15 +1499,6 @@ Docker deployments should verify:
 - Required ports are available.
 - Persistent storage is mounted correctly.
 - Application health checks pass where available.
-
-Examples:
-
-```bash
-docker compose ps
-```
-```bash
-docker logs <container>
-```
 
 ### Monitoring Validation
 
