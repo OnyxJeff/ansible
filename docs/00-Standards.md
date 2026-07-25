@@ -1,16 +1,16 @@
----
-title: "Infrastructure Standards"
-document_id: "CORE-00"
-category: "Core"
-status: "Active"
-version: "1.0"
-author: "Jeff"
-created: "2026-07-25"
-last_updated: "2026-07-25"
-review_cycle: "Annual"
----
-
 # OnyxNet Infrastructure Standards
+
+| Field | Value |
+|---|---|
+| Document ID | CORE-00 |
+| Category | Core |
+| Status | Active |
+| Version | 1.0 |
+| Owner | OnyxNet Infrastructure |
+| Created | 2026-07-25 |
+| Last Updated | 2026-07-25 |
+
+---
 
 > This document defines the operational standards for OnyxNet infrastructure and serves as the baseline reference for all infrastructure documentation.
 
