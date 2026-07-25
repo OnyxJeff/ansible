@@ -10,9 +10,9 @@
 | Created | 2026-07-25 |
 | Last Updated | 2026-07-25 |
 
----
-
 > This document defines the operational standards for OnyxNet infrastructure and serves as the baseline reference for all infrastructure documentation.
+
+---
 
 ## Table of Contents
 
