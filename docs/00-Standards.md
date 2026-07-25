@@ -1334,6 +1334,9 @@ Any future solution should continue supporting:
 ---
 
 ## 8. Documentation Standards
+
+> Documentation should explain decisions, not just configurations. Configuration files can be regenerated from Ansible or Docker Compose. The reasoning behind design choices cannot. Each document should capture the intent behind the implementation so the infrastructure can be maintained and evolved consistently.
+
 ### Documentation Location
 
 Documentation should be organized by purpose to ensure information is easy to locate and maintain.

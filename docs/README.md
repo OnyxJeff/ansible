@@ -1,7 +1,5 @@
 # OnyxNet Infrastructure Documentation
 
->Documentation should explain decisions, not just configurations. Configuration files can be regenerated from Ansible or Docker Compose. The reasoning behind design choices cannot. Each document should capture the intent behind the implementation so the infrastructure can be maintained and evolved consistently.
-
 ## Overview
 
 This documentation repository serves as the operational manual for the OnyxNet infrastructure.
