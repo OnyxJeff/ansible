@@ -14,25 +14,25 @@ review_cycle: "Annual"
 
 ## Table of Contents
 
-- [1. Purpose](#1-purpose)
-- [2. Naming Standards](#2-naming-standards)
-- [3. Network Standards](#3-network-standards)
-- [4. Ansible Standards](#4-ansible-standards)
-- [5. Docker Standards](#5-docker-standards)
-- [6. Monitoring Standards](#6-monitoring-standards)
-- [7. Secrets Management](#7-secrets-management)
-- [8. Documentation Standards](#8-documentation-standards)
-  - [Documentation Location](#documentation-location)
-  - [Document Naming Standards](#document-naming-standards)
-  - [Infrastructure Documentation](#infrastructure-documentation)
-  - [Service Documentation](#service-documentation)
-  - [Ansible Documentation](#ansible-documentation)
-  - [Docker Documentation](#docker-documentation)
-  - [Change Documentation](#change-documentation)
-- [9. Validation Standards](#9-validation-standards)
-- [10. Future Expansion](#10-future-expansion)
+- [1. Purpose](##1-purpose)
+- [2. Naming Standards](##2-naming-standards)
+- [3. Network Standards](##3-network-standards)
+- [4. Ansible Standards](##4-ansible-standards)
+- [5. Docker Standards](##5-docker-standards)
+- [6. Monitoring Standards](##6-monitoring-standards)
+- [7. Secrets Management](##7-secrets-management)
+- [8. Documentation Standards](##8-documentation-standards)
+  - [Documentation Location](###documentation-location)
+  - [Document Naming Standards](###document-naming-standards)
+  - [Infrastructure Documentation](###infrastructure-documentation)
+  - [Service Documentation](###service-documentation)
+  - [Ansible Documentation](###ansible-documentation)
+  - [Docker Documentation](###docker-documentation)
+  - [Change Documentation](###change-documentation)
+- [9. Validation Standards](##9-validation-standards)
+- [10. Future Expansion](##10-future-expansion)
 
-## Purpose
+## 1. Purpose
 
 This document defines the standards and conventions used throughout the OnyxNet infrastructure.
 
@@ -61,7 +61,7 @@ Permanent configuration changes should be migrated into automation.
 
 --- 
 
-## Naming Standards
+## 2. Naming Standards
 
 Hostnames should identify **where a system exists and what type of infrastructure it represents.**
 
@@ -202,7 +202,7 @@ Vanir Cluster
 
 ---
 
-## Network Standards
+## 3. Network Standards
 
 Network documentation should identify:
 
@@ -251,7 +251,7 @@ These prefixes describe infrastructure placement and ownership, not temporary ve
 
 ---
 
-## Ansible Standards
+## 4. Ansible Standards
 ### Purpose
 
 Ansible is the primary configuration management and deployment system for OnyxNet.
@@ -627,7 +627,7 @@ Scripts should automate repetitive administrative tasks rather than replace Ansi
 
 ---
 
-## Docker Standards
+## 5. Docker Standards
 ### Purpose
 
 Docker is used as the primary application deployment platform for containerized workloads within OnyxNet.
@@ -935,7 +935,7 @@ The objective is to recreate infrastructure without relying on undocumented manu
 
 ---
 
-## Monitoring Standards
+## 6. Monitoring Standards
 #### Purpose
 
 Monitoring provides visibility into the health, performance, and availability of OnyxNet infrastructure.
@@ -1221,7 +1221,7 @@ Alerting should be implemented separately from metric collection.
 
 ---
 
-## Secrets Management
+## 7. Secrets Management
 #### Purpose
 
 Secrets management defines how sensitive information is stored, accessed, deployed, and protected within OnyxNet.
@@ -1448,7 +1448,7 @@ Any future solution should continue supporting:
 
 ---
 
-## Documentation Standards
+## 8. Documentation Standards
 ### Documentation Location
 
 Documentation should be organized by purpose to ensure information is easy to locate and maintain.
@@ -1570,7 +1570,7 @@ Major architectural decisions should be documented separately through decision r
 
 ---
 
-## Validation Standards
+## 9. Validation Standards
 
 Validation ensures that infrastructure changes, service deployments, and configuration updates achieve the intended result.
 
@@ -1673,7 +1673,7 @@ Failed validation should result in:
 
 ---
 
-## Future Expansion
+## 10. Future Expansion
 
 OnyxNet standards should support future growth while maintaining consistency, reliability, and operational clarity.
 
