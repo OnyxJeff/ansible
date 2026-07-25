@@ -91,6 +91,7 @@ Documentation should include:
 
 The documentation is organized by function rather than by deployment order.
 
+```text
 docs/
 │
 ├── README.md
@@ -119,15 +120,18 @@ docs/
     ├── network-topology.drawio
     ├── network-topology.png
     └── ...
+```
 
 ---
 
 ## Directory Purpose
-| Directory	    | Purpose |
+
+| Directory	    | Purpose                                                        |
+|---------------|----------------------------------------------------------------|
 | `Core/`       | Foundational infrastructure components used throughout OnyxNet |
-| `Services/`   | Individual applications and service-specific documentation |
-| `Operations/` | Maintenance procedures, runbooks, and recovery documentation |
-| `images/`	    | Architecture diagrams and supporting visual documentation |
+| `Services/`   | Individual applications and service-specific documentation     |
+| `Operations/` | Maintenance procedures, runbooks, and recovery documentation   |
+| `images/`	    | Architecture diagrams and supporting visual documentation      |
 
 ---
 
@@ -177,6 +181,7 @@ Potential enhancements that are intentionally not part of the current implementa
 
 Changes to OnyxNet generally follow this lifecycle:
 
+```text
 Design
   ↓
 Document
@@ -190,6 +195,7 @@ Validate
 Monitor
   ↓
 Maintain
+```
 
 Infrastructure changes should be documented before or during implementation to prevent undocumented production dependencies.
 
@@ -199,6 +205,7 @@ Infrastructure changes should be documented before or during implementation to p
 
 The documentation describes the state and operation of the infrastructure repository:
 
+```text
 ansible/
 │
 ├── docs/
@@ -207,6 +214,7 @@ ansible/
 ├── roles/
 ├── scripts/
 └── identity/
+```
 
 The code defines the infrastructure.
 
