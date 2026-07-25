@@ -7,9 +7,7 @@ OnyxNet is a self-hosted environment built around Infrastructure as Code (IaC), 
 
 The goal of this documentation is:
 
-```text
-A failed system should be replaceable with new hardware or a clean operating environment and restored to a production-ready state using automation and documented procedures.
-```
+> A failed system should be replaceable with new hardware or a clean operating environment and restored to a production-ready state using automation and documented procedures.
 
 This documentation exists alongside the infrastructure code and should be treated as part of the infrastructure itself.
 
