@@ -12,6 +12,8 @@ review_cycle: "Annual"
 
 # OnyxNet Infrastructure Standards
 
+> This document defines the operational standards for OnyxNet infrastructure and serves as the baseline reference for all infrastructure documentation.
+
 ## Table of Contents
 
 - [1. Purpose](#1-purpose)
