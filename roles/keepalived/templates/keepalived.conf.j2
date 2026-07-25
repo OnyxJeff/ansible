@@ -1,0 +1,30 @@
+vrrp_script check_dns {
+    script "{{ keepalived_health_script }}"
+    interval {{ keepalived_check_interval }}
+}
+
+vrrp_instance {{ keepalived_instance }} {
+
+    state {{ keepalived_state }}
+
+    interface {{ keepalived_interface }}
+
+    virtual_router_id {{ keepalived_virtual_router_id }}
+
+    priority {{ keepalived_priority }}
+
+    advert_int 1
+
+    authentication {
+        auth_type {{ keepalived_auth_type }}
+        auth_pass {{ keepalived_auth_pass }}
+    }
+
+    virtual_ipaddress {
+        {{ keepalived_vip }}/24
+    }
+
+    track_script {
+        check_dns
+    }
+}

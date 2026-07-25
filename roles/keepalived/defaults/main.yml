@@ -1,0 +1,8 @@
+---
+keepalived_package: keepalived
+keepalived_interface: "{{ ansible_default_ipv4.interface }}"
+keepalived_auth_type: PASS
+keepalived_check_interval: 2
+keepalived_health_script: /usr/local/bin/check_dns.sh
+keepalived_metrics_dir: /var/lib/node_exporter/textfile_collector
+keepalived_metrics_script: /usr/local/bin/keepalived_metrics.sh

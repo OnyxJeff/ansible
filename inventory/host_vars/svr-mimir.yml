@@ -1,5 +1,1 @@
-enable_pi_base: true
-enable_docker: true
-enable_dockprom: true
-enable_display_oled: true
 enable_unifi: true

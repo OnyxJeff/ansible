@@ -1,1 +1,1 @@
-dockprom_dir: "/home/{{ ansible_user }}/dockprom"
+dockprom_dir: "{{ docker_stack_dir }}/dockprom"

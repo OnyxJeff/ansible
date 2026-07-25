@@ -13,6 +13,7 @@
       - ca-certificates
       - vim
       - nano
+      - rsync
     state: present
 
 - name: Ensure base tools directory exists

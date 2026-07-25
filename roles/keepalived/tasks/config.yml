@@ -1,0 +1,20 @@
+---
+
+- name: Deploy keepalived configuration
+  ansible.builtin.template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart keepalived
+
+
+- name: Deploy DNS health check
+  ansible.builtin.template:
+    src: check_dns.sh.j2
+    dest: "{{ keepalived_health_script }}"
+    owner: root
+    group: root
+    mode: "0755"
+  notify: Restart keepalived

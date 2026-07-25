@@ -1,4 +1,4 @@
-- name: Force Raspberry Pi reboot after docker setup
+- name: Force device reboot after docker setup
   ansible.builtin.reboot:
     msg: "Reboot triggered by docker role"
     reboot_timeout: 900

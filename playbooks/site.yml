@@ -1,9 +1,12 @@
-- name: Base system for all PotentPis
-  hosts: raspberries
+- name: Base system for all Devices
+  hosts: all
   become: true
 
   roles:
-    - pi_base
+    - base
+
+    - role: pi_base
+      when: enable_pi_base | default(false)
 
     - role: docker
       when: enable_docker | default(false)
@@ -11,17 +14,20 @@
     - role: dockprom
       when: enable_dockprom | default(false)
 
+    - role: pihole
+      when: enable_pihole | default(false)
+
+    - role: keepalived
+      when: enable_keepalived | default(false)
+
+    - role: unifi
+      when: enable_unifi | default(false)
+
+    - role: transmission
+      when: enable_transmission | default(false)
+
     - role: display_oled
       when: enable_display_oled | default(false)
 
     - role: display_kiosk
       when: enable_display_kiosk | default(false)
-
-    - role: unifi
-      when: enable_unifi | default(false)
-
-    - role: pihole
-      when: enable_pihole | default(false)
-
-    - role: transmission
-      when: enable_transmission | default(false)

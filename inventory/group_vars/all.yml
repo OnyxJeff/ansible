@@ -1,3 +1,4 @@
+enable_base: false
 enable_pi_base: false
 enable_docker: false
 enable_dockprom: false
@@ -5,5 +6,8 @@ enable_display_oled: false
 enable_display_kiosk: false
 enable_unifi: false
 enable_pihole: false
+enable_pihole_exporter: false
 enable_transmission: false
+enable_transmission_exporter: false
 pihole_backup_base: "{{ playbook_dir }}/../inventory/files/pihole"
+docker_stack_dir: /opt/docker

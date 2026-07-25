@@ -1,12 +1,6 @@
-enable_pi_base: true
-
-enable_docker: true
-
-enable_dockprom: true
-
-enable_display_oled: true
-
 enable_transmission: true
+enable_transmission_exporter: true
+
 transmission_user: transmission
 transmission_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256

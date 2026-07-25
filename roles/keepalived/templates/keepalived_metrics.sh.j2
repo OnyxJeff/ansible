@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+OUTPUT="{{ keepalived_metrics_dir }}/keepalived.prom"
+
+STATE_FILE="/var/run/keepalived.state"
+
+STATE=0
+
+if systemctl is-active --quiet keepalived; then
+
+    VIP="{{ keepalived_vip }}"
+
+    if ip addr show | grep -q "${VIP}"; then
+        STATE=2
+    else
+        STATE=1
+    fi
+
+else
+    STATE=3
+fi
+
+
+cat > "${OUTPUT}" <<EOF
+# HELP keepalived_vrrp_state Current VRRP state
+# TYPE keepalived_vrrp_state gauge
+keepalived_vrrp_state{instance="{{ keepalived_instance }}",vip="{{ keepalived_vip }}"} ${STATE}
+EOF

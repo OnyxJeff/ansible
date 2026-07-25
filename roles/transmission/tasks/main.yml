@@ -1,4 +1,3 @@
 ---
 - import_tasks: storage.yml
 - import_tasks: deploy.yml
-- import_tasks: metrics.yml

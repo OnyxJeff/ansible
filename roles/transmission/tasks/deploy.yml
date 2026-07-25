@@ -22,13 +22,13 @@
 - name: Wait for transmission to be up
   ansible.builtin.wait_for:
     host: "{{ inventory_hostname }}"
-    port: 9091
+    port: 9001
     delay: 5
     timeout: 30
 
 - name: Check if transmission is running
   ansible.builtin.uri:
-    url: "http://{{ inventory_hostname }}:9091/transmission/web/"
+    url: "http://{{ inventory_hostname }}:9001/transmission/web/"
     status_code: 200
   register: transmission_status
   retries: 5

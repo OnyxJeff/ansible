@@ -5,3 +5,10 @@
 
   roles:
     - pi_base
+
+- name: Server base configuration
+  hosts: servers
+  become: true
+
+  roles:
+    - servers

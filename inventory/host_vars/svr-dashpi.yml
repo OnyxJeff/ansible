@@ -1,4 +1,0 @@
-enable_pi_base: true
-enable_docker: true
-enable_dockprom: true
-enable_display_kiosk: true

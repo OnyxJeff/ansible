@@ -1,0 +1,25 @@
+---
+
+- name: Ensure node exporter textfile directory exists
+  ansible.builtin.file:
+    path: "{{ keepalived_metrics_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+
+- name: Install keepalived metrics script
+  ansible.builtin.template:
+    src: keepalived_metrics.sh.j2
+    dest: "{{ keepalived_metrics_script }}"
+    owner: root
+    group: root
+    mode: "0755"
+
+
+- name: Create keepalived metrics cron
+  ansible.builtin.cron:
+    name: "Keepalived Prometheus metrics"
+    minute: "*"
+    job: "{{ keepalived_metrics_script }}"

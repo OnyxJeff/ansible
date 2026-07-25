@@ -1,0 +1,5 @@
+enable_pihole: true
+enable_pihole_exporter: true
+enable_keepalived: true
+enable_docker: true
+enable_dockprom: true

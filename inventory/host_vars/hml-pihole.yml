@@ -1,6 +1,6 @@
 keepalived_instance: VI_VANIR
-keepalived_state: MASTER
+keepalived_state: BACKUP
 keepalived_virtual_router_id: 52
-keepalived_priority: 150
+keepalived_priority: 100
 keepalived_vip: 10.100.0.8
 keepalived_auth_pass: VanirSecure99

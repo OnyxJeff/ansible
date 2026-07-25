@@ -13,11 +13,29 @@
 # Deploy dockprom stack files
 ###########################################################
 
+- name: Ensure dockprom directory exists
+  ansible.builtin.file:
+    path: "{{ dockprom_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+    
 - name: Copy dockprom stack to host
   ansible.builtin.synchronize:
     src: dockprom/
     dest: "{{ dockprom_dir }}/"
     recursive: true
+
+###########################################################
+# Copy prometheus.yml file
+###########################################################
+
+- name: Copy prometheus.yml file
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "{{ dockprom_dir }}/prometheus/prometheus.yml"
+    mode: "0644"
 
 ###########################################################
 # Bring up Docker Compose stack
@@ -28,4 +46,4 @@
     cmd: docker compose up -d
     chdir: "{{ dockprom_dir }}"
   register: dockprom_up
-  changed_when: "'Creating' in dockprom_up.stdout or 'Started' in dockprom_up.stdout or dockprom_up.rc == 0"
+  changed_when: "'Creating' in dockprom_up.stdout or 'Recreating' in dockprom_up.stdout or 'Started' in dockprom_up.stdout"
