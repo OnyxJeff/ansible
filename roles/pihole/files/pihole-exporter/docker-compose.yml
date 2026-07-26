@@ -16,6 +16,6 @@ services:
       TOP_N: "10"
       # DEBUG: "true"   # or --verbose
     volumes:
-      - /pihole/etc:/etc/pihole:ro
+      - /etc/pihole:/etc/pihole:ro
     ports:
       - "9617:9617"
