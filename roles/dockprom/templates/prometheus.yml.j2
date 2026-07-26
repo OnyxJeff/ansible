@@ -51,11 +51,6 @@ scrape_configs:
       - targets:
         - 'localhost:9108'
 
-  - job_name: 'nodeexp'
-    static_configs:
-      - targets:
-        - 'localhost:9100'
-
   - job_name: 'pve-aesir'
     metrics_path: /pve
     params:
