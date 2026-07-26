@@ -19,3 +19,10 @@
     mode: "0755"
     newline_sequence: '\n'
   notify: Restart keepalived
+
+- name: Remove CRLF line endings from DNS health check
+  ansible.builtin.replace:
+    path: "{{ keepalived_health_script }}"
+    regexp: '\r$'
+    replace: ''
+  notify: Restart keepalived
