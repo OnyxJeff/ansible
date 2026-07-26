@@ -17,4 +17,5 @@
     owner: root
     group: root
     mode: "0755"
+    newline_sequence: '\n'
   notify: Restart keepalived
