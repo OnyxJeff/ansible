@@ -9,5 +9,6 @@ enable_pihole: false
 enable_pihole_exporter: false
 enable_transmission: false
 enable_transmission_exporter: false
+enable_monitoring_stack: false
 pihole_backup_base: "{{ playbook_dir }}/../inventory/files/pihole"
 docker_stack_dir: /opt/docker

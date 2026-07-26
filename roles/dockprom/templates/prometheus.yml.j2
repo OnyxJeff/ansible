@@ -19,17 +19,79 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
+{% if enable_monitoring_stack | default(false) %}
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+        - 'localhost:8081'
+
+  - job_name: 'speedtest'
+    metrics_path: /metrics
+    scrape_interval: 15m
+    scrape_timeout: 60s
+    static_configs:
+      - targets:
+        - 'localhost:9798'
+
+  - job_name: 'prometheus-router'
+    static_configs:
+      - targets:
+        - '10.100.0.1:9100'
+
+  - job_name: 'homeassistant'
+    basic_auth:
+      username: admin
+      password: admin
+    static_configs:
+      - targets:
+        - 'svr-frigg.jotunheim.onyxnet.lan:9100'
+
+  - job_name: 'TrueNAS-Muninn'
+    static_configs:
+      - targets:
+        - 'localhost:9108'
+
+  - job_name: 'nodeexp'
+    static_configs:
+      - targets:
+        - 'localhost:9100'
+
+  - job_name: 'pve-aesir'
+    metrics_path: /pve
+    params:
+      module: [default]
+      cluster: ['1']
+      node: ['1']
+    static_configs:
+      - targets:
+        - 'svr-aesir1.asgard.onyxnet.lan:9221'
+        - 'svr-aesir2.asgard.onyxnet.lan:9221'
+        - 'svr-aesir3.asgard.onyxnet.lan:9221'
+
+  - job_name: 'pve-vanir'
+    metrics_path: /pve
+    params:
+      module: [default]
+      cluster: ['1']
+      node: ['1']
+    static_configs:
+      - targets:
+        - 'svr-vanir1.asgard.onyxnet.lan:9221'
+        - 'svr-vanir2.asgard.onyxnet.lan:9221'
+        - 'svr-vanir3.asgard.onyxnet.lan:9221'
+{% endif %}
+
 {% if enable_pihole_exporter | default(false) %}
   - job_name: 'pihole-exporter'
     scrape_interval: 10s
     static_configs:
       - targets:
-          - localhost:9617
+        - localhost:9617
 {% endif %}
 
 {% if enable_transmission_exporter | default(false) %}
   - job_name: 'transmission-exporter'
     static_configs:
       - targets:
-          - localhost:19091
+        - localhost:19091
 {% endif %}

@@ -20,12 +20,19 @@
     owner: root
     group: root
     mode: '0755'
-    
+
 - name: Copy dockprom stack to host
   ansible.builtin.synchronize:
     src: dockprom/
     dest: "{{ dockprom_dir }}/"
     recursive: true
+
+- name: Copy docker-compose.yml file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ dockprom_dir }}/docker-compose.yml"
+    mode: "0644"
+  when: monitoring_enabled | default(false)
 
 ###########################################################
 # Copy prometheus.yml file
@@ -37,6 +44,28 @@
     dest: "{{ dockprom_dir }}/prometheus/prometheus.yml"
     mode: "0644"
 
+###########################################################
+# Copy grafana.ini file
+###########################################################
+
+- name: Copy grafana.ini file
+  ansible.builtin.template:
+    src: grafana.ini.j2
+    dest: "{{ dockprom_dir }}/grafana/grafana.ini"
+    mode: "0644"
+  when: enable_monitoring_stack | default(false)
+
+###########################################################
+# Copy config.monitoring file
+###########################################################
+
+- name: Copy config.monitoring file
+  ansible.builtin.template:
+    src: config.monitoring.j2
+    dest: "{{ dockprom_dir }}/grafana/config.monitoring"
+    mode: "0644"
+  when: enable_monitoring_stack | default(false)
+  
 ###########################################################
 # Bring up Docker Compose stack
 ###########################################################
