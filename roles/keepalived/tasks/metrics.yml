@@ -17,6 +17,12 @@
     group: root
     mode: "0755"
 
+- name: Remove CRLF line endings from keepalived metrics script
+  ansible.builtin.replace:
+    path: "{{ keepalived_metrics_script }}"
+    regexp: '\r$'
+    replace: ''
+  notify: Restart keepalived
 
 - name: Create keepalived metrics cron
   ansible.builtin.cron:
