@@ -1,4 +1,4 @@
-transmission_dir: "/home/{{ ansible_user }}/transmission"
+transmission_dir: "{{ docker_stack_dir }}/transmission"
 
 transmission_uid: 1000
 transmission_gid: 1000

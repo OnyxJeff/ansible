@@ -1,1 +1,1 @@
-unifi_dir: "/home/{{ ansible_user }}/unifi"
+unifi_dir: "{{ docker_stack_dir }}/unifi"

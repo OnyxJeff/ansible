@@ -1,7 +1,7 @@
 # Pi-hole configuration file (v6.7)
 # Encoding: UTF-8
 # This file is managed by pihole-FTL
-# Last updated on 2026-07-25 14:52:36 EDT
+# Last updated on 2026-07-26 18:30:05 EDT
 
 [dns]
   # Upstream DNS Servers to be used by Pi-hole. If this is not set, Pi-hole will not
@@ -238,7 +238,21 @@
     "firefly.onyxnethq.site,npm.onyxnethq.site",
     "aesir.onyxnethq.site,npm.onyxnethq.site",
     "vanir.onyxnethq.site,npm.onyxnethq.site",
-    "pve.onyxnethq.site,npm.onyxnethq.site"
+    "pve.onyxnethq.site,npm.onyxnethq.site",
+    "bookrequests.onyxnethq.site,npm.onyxnethq.site",
+    "books.onyxnethq.site,npm.onyxnethq.site",
+    "cloud.onyxnethq.site,npm.onyxnethq.site",
+    "convert.onyxnethq.site,npm.onyxnethq.site",
+    "file.onyxnethq.site,npm.onyxnethq.site",
+    "game.onyxnethq.site,npm.onyxnethq.site",
+    "git.onyxnethq.site,npm.onyxnethq.site",
+    "homebox.onyxnethq.site,npm.onyxnethq.site",
+    "immich.onyxnethq.site,npm.onyxnethq.site",
+    "mealie.onyxnethq.site,npm.onyxnethq.site",
+    "net.onyxnethq.site,npm.onyxnethq.site",
+    "requests.onyxnethq.site,npm.onyxnethq.site",
+    "status.onyxnethq.site,npm.onyxnethq.site",
+    "warden.onyxnethq.site,npm.onyxnethq.site"
   ] ### CHANGED, default = []
 
   # Port used by the DNS server

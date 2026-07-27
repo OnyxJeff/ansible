@@ -1,6 +1,6 @@
 ---
 ###########################################################
-# Docker stack: dockprom
+# Docker stack: unifi OS server
 ###########################################################
 
 - name: Ensure Docker Compose plugin is installed
@@ -10,14 +10,44 @@
     update_cache: true
 
 ###########################################################
-# Deploy dockprom stack files
+# Deploy unifi OS server files
 ###########################################################
 
-- name: Copy unifi stack to host
-  ansible.builtin.synchronize:
-    src: unifi/
-    dest: "{{ unifi_dir }}/"
-    recursive: true
+- name: Create unifi stack directory
+  ansible.builtin.file:
+    path: "{{ unifi_dir }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+
+- name: Create unifi OS server compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ unifi_dir }}/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0644"
+
+###########################################################
+# Create persistent directories for unifi OS server
+###########################################################
+
+- name: Create Unifi OS Server directories
+  ansible.builtin.file:
+    path: "{{ unifi_dir }}/{{ item }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+  loop:
+    - persistent
+    - var-log
+    - data
+    - srv
+    - var-lib-unifi
+    - var-lib-mongodb
+    - etc-rabbitmq-ssl
 
 ###########################################################
 # Bring up Docker Compose stack

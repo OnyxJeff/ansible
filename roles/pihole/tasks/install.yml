@@ -1,14 +1,4 @@
 ---
-- name: Install required packages
-  become: true
-  ansible.builtin.apt:
-    name:
-      - curl
-      - git
-      - dnsutils
-    state: present
-    update_cache: true
-
 - name: Create Pi-hole configuration directory
   become: true
   ansible.builtin.file:

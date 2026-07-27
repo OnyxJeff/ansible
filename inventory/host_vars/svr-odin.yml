@@ -1,4 +1,5 @@
 enable_nebula_sync: true
+enable_display_oled: true
 
 keepalived_instance: VI_AESIR
 keepalived_state: MASTER

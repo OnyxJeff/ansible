@@ -32,7 +32,6 @@
     src: docker-compose.yml.j2
     dest: "{{ dockprom_dir }}/docker-compose.yml"
     mode: "0644"
-  when: monitoring_enabled | default(false)
 
 ###########################################################
 # Copy prometheus.yml file

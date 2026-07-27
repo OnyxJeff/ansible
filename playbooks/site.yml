@@ -8,6 +8,12 @@
     - role: pi_base
       when: enable_pi_base | default(false)
 
+    - role: display_oled
+      when: enable_display_oled | default(false)
+
+    - role: display_kiosk
+      when: enable_display_kiosk | default(false)
+
     - role: docker
       when: enable_docker | default(false)
 
@@ -25,9 +31,3 @@
 
     - role: transmission
       when: enable_transmission | default(false)
-
-    - role: display_oled
-      when: enable_display_oled | default(false)
-
-    - role: display_kiosk
-      when: enable_display_kiosk | default(false)
