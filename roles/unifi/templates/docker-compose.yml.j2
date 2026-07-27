@@ -15,7 +15,7 @@ services:
       - /var/lib/journal
       - /var/opt/unifi/tmp:size=64m
     environment:
-      - UOS_SYSTEM_IP={{ ansible_host }}.asgard.onyxnet.lan
+      - UOS_SYSTEM_IP={{ inventory_hostname }}.asgard.onyxnet.lan
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
       - ./persistent:/persistent
