@@ -37,3 +37,38 @@
     src: apt-get-autoupdater.sh.j2
     dest: "/home/{{ ansible_user }}/scripts/apt-get-autoupdater.sh"
     mode: '0755'
+
+- name: Configure OS auto-updater cron jobs
+  become: true
+  ansible.builtin.cron:
+    name: "{{ item.name }}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    day: "{{ item.day | default('*') }}"
+    month: "{{ item.month | default('*') }}"
+    weekday: "{{ item.weekday | default('*') }}"
+    user: "{{ ansible_user }}"
+    job: "{{ item.job }}"
+  loop:
+    - name: "OS-Auto-Updater - weekly update"
+      minute: "0"
+      hour: "1"
+      weekday: "0"
+      job: >
+        bash /home/{{ ansible_user }}/scripts/apt-get-autoupdater.sh
+
+    - name: "OS-Auto-Updater - monthly log backup"
+      minute: "50"
+      hour: "0"
+      day: "1"
+      job: >
+        /bin/bash -c 'cp -p
+        /home/{{ ansible_user }}/logs/apt-get-autoupdater.log
+        /home/{{ ansible_user }}/backup_logs/apt-get-autoupdater-$(date +\%Y\%m\%d).log'
+
+    - name: "OS-Auto-Updater - clear monthly log"
+      minute: "51"
+      hour: "0"
+      day: "1"
+      job: >
+        rm -f /home/{{ ansible_user }}/logs/apt-get-autoupdater.log

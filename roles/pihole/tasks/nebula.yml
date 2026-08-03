@@ -36,7 +36,23 @@
     mode: "0644"
 
 ###########################################################
-# Create Cron job for sync(s)
+# Create log directory
+###########################################################
+
+- name: Create log directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/{{ item }}"
+    state: directory
+    owner: "{{ nebula_sync_user }}"
+    group: "{{ nebula_sync_user }}"
+    mode: "0755"
+  loop:
+    - logs
+    - backup_logs
+
+###########################################################
+# Configure Nebula Sync cron jobs
 ###########################################################
 
 - name: Configure Nebula Sync cron jobs
@@ -45,6 +61,9 @@
     name: "{{ item.name }}"
     minute: "{{ item.minute }}"
     hour: "{{ item.hour }}"
+    day: "{{ item.day | default('*') }}"
+    month: "{{ item.month | default('*') }}"
+    weekday: "{{ item.weekday | default('*') }}"
     user: "{{ nebula_sync_user }}"
     job: "{{ item.job }}"
   loop:
@@ -53,8 +72,10 @@
       hour: "*"
       job: >
         cd {{ nebula_sync_dir }} &&
-        flock -n /tmp/nebula-sync.lock
-        docker compose run --rm nebula-sync
+        flock -n /tmp/nebula-sync.lock sh -c '
+        printf "\n===== %s =====\n" "$(date)" >> /home/{{ nebula_sync_user }}/logs/nebula-sync.log &&
+        docker compose run --rm nebula-sync >> /home/{{ nebula_sync_user }}/logs/nebula-sync.log 2>&1
+        '
 
     - name: "Nebula Sync - daily Discord report"
       minute: "0"
@@ -63,3 +84,19 @@
         cd {{ nebula_sync_dir }}/daily &&
         flock -n /tmp/nebula-sync.lock
         docker compose run --rm nebula-sync
+
+    - name: "Nebula Sync - monthly log backup"
+      minute: "50"
+      hour: "0"
+      day: "1"
+      job: >
+        /bin/bash -c 'cp
+        /home/{{ nebula_sync_user }}/logs/nebula-sync.log
+        /home/{{ nebula_sync_user }}/backup_logs/nebula-sync-$(date +\%Y\%m\%d).log'
+
+    - name: "Nebula Sync - clear monthly log"
+      minute: "51"
+      hour: "0"
+      day: "1"
+      job: >
+        rm -f /home/{{ nebula_sync_user }}/logs/nebula-sync.log
