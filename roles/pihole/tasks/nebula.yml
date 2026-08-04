@@ -67,8 +67,8 @@
     user: "{{ nebula_sync_user }}"
     job: "{{ item.job }}"
   loop:
-    - name: "Nebula Sync - every 15 minutes"
-      minute: "*/15"
+    - name: "Nebula Sync - every 30 minutes"
+      minute: "*/30"
       hour: "*"
       job: >
         cd {{ nebula_sync_dir }} &&
