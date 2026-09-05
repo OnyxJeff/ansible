@@ -5,11 +5,11 @@ set -euo pipefail
 # Inputs
 # ----------------------------
 HOST="${1:-}"
-USER="${2:-pi}"
+USER="${2:-root}"
 NAME="${3:-}"
 
 if [[ -z "$HOST" || -z "$NAME" ]]; then
-  echo "Usage: $0 <ip> <ssh-user> <inventory-name>"
+  echo "Usage: $0 <ip or hostname> <ssh-user> <inventory-name>"
   echo "Example: $0 10.100.0.11 pi potentpi1"
   exit 1
 fi

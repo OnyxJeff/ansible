@@ -1,0 +1,5 @@
+base_dir: "/usr/local/{{ ansible_user }}"
+config_dir: "{{ base_dir }}/config"
+scripts_dir: "{{ base_dir }}/scripts"
+home_dir: "/home/{{ ansible_user }}"
+url_default: "https://YOUR-DAKBOARD-URL-HERE"
